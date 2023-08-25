@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <style>
+    body {
+        font-family: 'Helvetica', sans-serif;
+        line-height: 1.6;
+        color: #666;
+        margin: 0;
+        padding: 0;
+        background-color: #f7f7f7; }
+h2 {
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align:center;
+    color: #07f;
+    font-size: 2em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+a,
+a:visited {
+    color: #666;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-color: #ddd;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.person-details {
+    max-width: 800px;
+    margin: 2em auto 0 auto;
+    font-size: 1.2em;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.person-details p {
+    margin-bottom: 10px;
+}
+
+.options {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.separator {
+    border-top: 1px solid #ddd;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.options form {
+    margin: 10px;
+}
+
+input[type="submit"] {
+    font-size: 1em;
+    padding: 10px 20px;
+    background-color: #07f;
+    color: #f5f5f5;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #0060cc;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.24), 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+</style>
+</head>
+<body>
+<h2>Person Details</h2>
+<div class="person-details">
+    <p th:text="${person.getFullName() + ', ' + person.getYearOfBirth()}">value</p>
+    <div th:if="${#lists.isEmpty(busyBooks)}" th:text="${'Person has not yet taken a single book'}">not
+    </div>
+    <h th:if="${not #lists.isEmpty(busyBooks)}" style="font-weight: bold"> <hr> Books: <br> </h>
+    <div th:if="${not #lists.isEmpty(busyBooks)}" th:each="book : ${busyBooks}">
+        <a th:href="@{/books/{id}(id=${book.getId()})}"
+           th:text="${book.bookName + ', ' + book.authorName + ', ' + book.yearOfProduction}">book</a>
+    </div>
+
+    <div class="options">
+        <div class="separator"></div>
+        <form th:method="GET" th:action="@{/persons/{id}/edit(id=${person.getId()})}">
+            <input type="submit" value="Edit" class="btn btn-primary">
+        </form>
+        <form th:method="DELETE" th:action="@{/persons/{id}(id=${person.getId()})}">
+            <input type="submit" value="Delete" class="btn btn-danger"/>
+        </form>
+    </div>
+</div>
+</body>
+</html>
