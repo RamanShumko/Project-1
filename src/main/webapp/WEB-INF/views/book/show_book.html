@@ -103,7 +103,7 @@
             </select>
             <input type="submit" value="Assign a book">
         </form>
-        <form th:if="${book.person_id} > 0" th:method="DELETE" th:action="@{/books/{id}/delete/person(id=${book.id})}">
+        <form th:if="${book.person_id} > 0" th:method="PATCH" th:action="@{/books/{id}/delete/person(id=${book.id})}">
             <h>The book is now: </h>
             <a th:href="@{/persons/{id}(id=${person.getId()})}" th:text="${person.fullName}"></a>
             <input type="submit" value="Free the book">

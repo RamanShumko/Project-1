@@ -12,15 +12,6 @@ public class Book {
     @Digits(integer = 4, fraction = 0, message = "Number of invalid connection (expected <4 bits>,<0 bits>)")
     int yearOfProduction;
     int person_id;
-    Person person;
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
 
     public int getPerson_id() {
         return person_id;

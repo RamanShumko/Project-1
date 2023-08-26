@@ -36,12 +36,6 @@ public class BookDAOImplementation implements BookDAO{
     public void deletePerson(int id){
         jdbcTemplate.update("update Book set person_id=null where book_id=?", id);
     }
-
-    @Override
-    public List<Book> busyBooks(int id) {
-        return jdbcTemplate.query("select book_id, book_name, author_name, year_of_production, person_id" +
-                " from person join book using (person_id) where person_id=?", new Object[]{id}, new BookMapper());
-    }
     @Override
     public void updateBook(Book book, int id) {
         jdbcTemplate.update("update Book set book_name=?, author_name=?, year_of_production=? where book_id=?",

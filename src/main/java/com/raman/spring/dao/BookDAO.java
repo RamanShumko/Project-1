@@ -13,8 +13,6 @@ public interface BookDAO {
     void addPerson(Book book);
     void deletePerson(int id);
 
-    List<Book> busyBooks(int id);
-
     void updateBook(Book book, int id);
     void deleteBook(int id);
 

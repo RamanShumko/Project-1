@@ -22,8 +22,6 @@ public class PersonController {
     private PersonDAOImplementation personDAOImplementation;
     @Autowired
     private PersonValidator personValidator;
-    @Autowired
-    private BookDAOImplementation bookDAOImplementation;
 
     @GetMapping()
     public String showAllPersons(Model model){
@@ -35,7 +33,7 @@ public class PersonController {
     public String getPerson(@PathVariable("id") int id, Model model){
         Person person = personDAOImplementation.getPerson(id);
         model.addAttribute("person", person);
-        model.addAttribute("busyBooks", bookDAOImplementation.busyBooks(id));
+        model.addAttribute("busyBooks", personDAOImplementation.busyBooks(id));
         return "person/show_person";
     }
     @GetMapping("/new")

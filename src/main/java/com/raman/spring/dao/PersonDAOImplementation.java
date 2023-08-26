@@ -1,5 +1,6 @@
 package com.raman.spring.dao;
 
+import com.raman.spring.models.Book;
 import com.raman.spring.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -33,6 +34,10 @@ public class PersonDAOImplementation implements PersonDAO{
         Person person = jdbcTemplate.query("select * from Person where full_name=?",
                 new Object[]{fullName}, new PersonMapper()).stream().findAny().orElse(null);
         return person;
+    }
+    @Override
+    public List<Book> busyBooks(int id) {
+        return jdbcTemplate.query("select * from Book where person_id=?", new Object[]{id}, new BookMapper());
     }
 
     @Override

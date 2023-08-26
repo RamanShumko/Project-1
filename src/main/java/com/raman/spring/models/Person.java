@@ -13,16 +13,6 @@ public class Person {
     @Digits(integer = 4, fraction = 0, message = "Number of invalid connection (expected <4 bits>,<0 bits>)")
     int yearOfBirth;
 
-    List<Book> listBook;
-
-    public List<Book> getListBook() {
-        return listBook;
-    }
-
-    public void setListBook(List<Book> listBook) {
-        this.listBook = listBook;
-    }
-
     public int getId() {
         return id;
     }

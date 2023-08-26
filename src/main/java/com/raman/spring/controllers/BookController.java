@@ -21,30 +21,28 @@ public class BookController {
     private BookDAOImplementation bookDAOImplementation;
     @Autowired
     private PersonDAOImplementation personDAOImplementation;
-    private Book book1;
+    private Book temporaryBook;
     @GetMapping()
     public String getAllBooks(Model model){
-        List<Book> allBooks = bookDAOImplementation.getAllBook();
-        model.addAttribute("allBooks", allBooks);
+        model.addAttribute("allBooks", bookDAOImplementation.getAllBook());
         return "book/show_all_books";
     }
     @GetMapping("/{id}")
     public String getBook(@PathVariable("id") int id, Model model){
         Book book = bookDAOImplementation.getBook(id);
-        book1 = book;
-        List<Person> allPerson = personDAOImplementation.getAllPersons();
-        model.addAttribute("allPerson", allPerson);
+        temporaryBook = book;
+        model.addAttribute("allPerson", personDAOImplementation.getAllPersons());
         model.addAttribute("book", book);
         model.addAttribute("person", personDAOImplementation.getPerson(book.getPerson_id()));
         return "book/show_book";
     }
     @PatchMapping ("/person")
-    public String addPerson(@ModelAttribute("book") Book book, Model model){
-        book1.setPerson_id(book.getPerson_id());
-        bookDAOImplementation.addPerson(book1);
+    public String addPerson(@ModelAttribute("book") Book book){
+        temporaryBook.setPerson_id(book.getPerson_id());
+        bookDAOImplementation.addPerson(temporaryBook);
         return "redirect:/books";
     }
-    @DeleteMapping("/{id}/delete/person")
+    @PatchMapping("/{id}/delete/person")
     public String deletePerson(@PathVariable("id") int id){
         bookDAOImplementation.deletePerson(id);
         return "redirect:/books";
