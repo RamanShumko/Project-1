@@ -4,14 +4,14 @@ import javax.validation.constraints.*;
 
 public class Book {
     int id;
-    @NotBlank(message = "Book name should not by empty")
-    String bookName;
-    @NotBlank(message = "Author name should not by empty")
-    String authorName;
+    @NotBlank(message = "Book name should not be empty")
+    private String bookName;
+    @NotBlank(message = "Author name should not be empty")
+    private String authorName;
     @Min(value = 1, message = "Year of production should be greater than 0")
     @Digits(integer = 4, fraction = 0, message = "Number of invalid connection (expected <4 bits>,<0 bits>)")
-    int yearOfProduction;
-    int person_id;
+    private int yearOfProduction;
+    private int person_id;
 
     public int getPerson_id() {
         return person_id;

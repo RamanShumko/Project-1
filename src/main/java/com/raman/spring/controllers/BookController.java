@@ -1,6 +1,8 @@
 package com.raman.spring.controllers;
 
+import com.raman.spring.dao.BookDAO;
 import com.raman.spring.dao.BookDAOImplementation;
+import com.raman.spring.dao.PersonDAO;
 import com.raman.spring.dao.PersonDAOImplementation;
 import com.raman.spring.models.Book;
 import com.raman.spring.models.Person;
@@ -18,33 +20,37 @@ import java.util.List;
 @RequestMapping("/books")
 public class BookController {
     @Autowired
-    private BookDAOImplementation bookDAOImplementation;
+    private BookDAO bookDAO;
     @Autowired
-    private PersonDAOImplementation personDAOImplementation;
+    private PersonDAO personDAO;
     private Book temporaryBook;
+
     @GetMapping()
     public String getAllBooks(Model model){
-        model.addAttribute("allBooks", bookDAOImplementation.getAllBook());
+        model.addAttribute("allBooks", bookDAO.getAllBook());
         return "book/show_all_books";
     }
+
     @GetMapping("/{id}")
     public String getBook(@PathVariable("id") int id, Model model){
-        Book book = bookDAOImplementation.getBook(id);
+        Book book = bookDAO.getBook(id);
         temporaryBook = book;
-        model.addAttribute("allPerson", personDAOImplementation.getAllPersons());
+        model.addAttribute("allPerson", personDAO.getAllPersons());
         model.addAttribute("book", book);
-        model.addAttribute("person", personDAOImplementation.getPerson(book.getPerson_id()));
+        model.addAttribute("person", personDAO.getPerson(book.getPerson_id()));
         return "book/show_book";
     }
+
     @PatchMapping ("/person")
     public String addPerson(@ModelAttribute("book") Book book){
         temporaryBook.setPerson_id(book.getPerson_id());
-        bookDAOImplementation.addPerson(temporaryBook);
+        bookDAO.addPerson(temporaryBook);
         return "redirect:/books";
     }
+
     @PatchMapping("/{id}/delete/person")
     public String deletePerson(@PathVariable("id") int id){
-        bookDAOImplementation.deletePerson(id);
+        bookDAO.deletePerson(id);
         return "redirect:/books";
     }
 
@@ -58,26 +64,29 @@ public class BookController {
         if(bindingResult.hasErrors()){
             return "book/new_book";
         }
-        bookDAOImplementation.saveBook(book);
+        bookDAO.saveBook(book);
         return "redirect:/books";
     }
+
     @GetMapping("/{id}/edit")
     public String updateBook(@PathVariable("id") int id, Model model){
-        Book book = bookDAOImplementation.getBook(id);
+        Book book = bookDAO.getBook(id);
         model.addAttribute("book", book);
         return "book/edit_book";
     }
+
     @PutMapping("/{id}")
     public String editBook(@PathVariable("id") int id, @ModelAttribute("book") @Valid Book book, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return "book/edit_book";
         }
-        bookDAOImplementation.updateBook(book, id);
+        bookDAO.updateBook(book, id);
         return "redirect:/books";
     }
+
     @DeleteMapping("/{id}")
     public String deleteBook(@PathVariable("id") int id){
-        bookDAOImplementation.deleteBook(id);
+        bookDAO.deleteBook(id);
         return "redirect:/books";
     }
 
