@@ -173,3 +173,5 @@
 #.idea/
 #/.idea/
 #/.idea/*
+/target/
+/.idea/
