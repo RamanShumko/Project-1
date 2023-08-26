@@ -175,3 +175,4 @@
 #/.idea/*
 /target/
 /.idea/
+/.idea/modules.xml
